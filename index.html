@@ -1,0 +1,1168 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#080e1c">
+
+    <title>Guilherme MathLab | Laboratório Matemático</title>
+
+    <meta name="description" content="Um ambiente matemático interativo para explorar, calcular e visualizar a matemática.">
+
+    <!-- FONTES -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- ÍCONES -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- BIBLIOTECAS MATEMÁTICAS -->
+    <script src="https://cdn.jsdelivr.net/npm/mathjs@13.2.0/lib/browser/math.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+
+    <!-- ESTILO -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<div class="app-container">
+
+    <!-- MENU LATERAL -->
+    <aside class="sidebar" id="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">
+                <i data-lucide="atom"></i>
+            </div>
+
+            <div class="brand-info">
+                <h1>GUILHERME<span>MATHLAB</span></h1>
+                <small>LABORATÓRIO MATEMÁTICO</small>
+            </div>
+
+            <button class="sidebar-close" id="closeSidebar">
+                <i data-lucide="x"></i>
+            </button>
+        </div>
+
+        <div class="sidebar-content">
+
+            <span class="menu-label">PRINCIPAL</span>
+
+            <nav class="menu-group">
+
+                <button class="menu-item active" data-module="inicio">
+                    <i data-lucide="layout-dashboard"></i>
+                    <span>Visão geral</span>
+                </button>
+
+                <button class="menu-item" data-module="projetos">
+                    <i data-lucide="folder-open"></i>
+                    <span>Meus projetos</span>
+                </button>
+
+            </nav>
+
+            <span class="menu-label">MATEMÁTICA</span>
+
+            <nav class="menu-group">
+
+                <button class="menu-item" data-module="graficos">
+                    <i data-lucide="chart-no-axes-combined"></i>
+                    <span>Gráficos 2D</span>
+                    <span class="menu-tag">2D</span>
+                </button>
+
+                <button class="menu-item" data-module="geometria">
+                    <i data-lucide="shapes"></i>
+                    <span>Geometria 2D</span>
+                </button>
+
+                <button class="menu-item" data-module="espacial">
+                    <i data-lucide="box"></i>
+                    <span>Geometria 3D</span>
+                    <span class="menu-tag">3D</span>
+                </button>
+
+                <button class="menu-item" data-module="calculadora">
+                    <i data-lucide="calculator"></i>
+                    <span>Calculadora científica</span>
+                </button>
+
+                <button class="menu-item" data-module="algebra">
+                    <i data-lucide="sigma"></i>
+                    <span>Álgebra</span>
+                </button>
+
+                <button class="menu-item" data-module="calculo">
+                    <i data-lucide="infinity"></i>
+                    <span>Cálculo</span>
+                </button>
+
+                <button class="menu-item" data-module="estatistica">
+                    <i data-lucide="chart-pie"></i>
+                    <span>Estatística</span>
+                </button>
+
+                <button class="menu-item" data-module="fisica">
+                    <i data-lucide="orbit"></i>
+                    <span>Física matemática</span>
+                </button>
+
+            </nav>
+
+            <span class="menu-label">RECURSOS</span>
+
+            <nav class="menu-group">
+
+                <button class="menu-item" data-module="editor">
+                    <i data-lucide="file-pen-line"></i>
+                    <span>Editor matemático</span>
+                </button>
+
+                <button class="menu-item" data-module="biblioteca">
+                    <i data-lucide="library"></i>
+                    <span>Biblioteca</span>
+                </button>
+
+            </nav>
+
+        </div>
+
+        <!-- RODAPÉ DO MENU -->
+        <div class="sidebar-footer">
+
+            <div class="version-info">
+                <div class="status-dot"></div>
+                <span>Ambiente disponível</span>
+            </div>
+
+            <div class="sidebar-profile">
+                <div class="profile-avatar">G</div>
+
+                <div class="profile-text">
+                    <strong>Professor Guilherme</strong>
+                    <small>Laboratório pessoal</small>
+                </div>
+
+                <i data-lucide="settings" class="profile-settings"></i>
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- ÁREA PRINCIPAL -->
+    <main class="main-content">
+
+        <!-- BARRA SUPERIOR -->
+        <header class="topbar">
+
+            <div class="topbar-left">
+
+                <button class="mobile-menu" id="openSidebar">
+                    <i data-lucide="menu"></i>
+                </button>
+
+                <div class="breadcrumb">
+                    <span>MathLab</span>
+                    <i data-lucide="chevron-right"></i>
+                    <strong id="breadcrumbTitle">Visão geral</strong>
+                </div>
+
+            </div>
+
+            <div class="topbar-right">
+
+                <div class="date-display">
+                    <i data-lucide="calendar-days"></i>
+                    <span id="currentDate">Laboratório matemático</span>
+                </div>
+
+                <div class="topbar-divider"></div>
+
+                <button class="icon-button" title="Tela cheia" id="fullscreenButton">
+                    <i data-lucide="maximize"></i>
+                </button>
+
+                <div class="topbar-avatar">G</div>
+
+            </div>
+
+        </header>
+
+
+        <!-- CONTEÚDO DAS PÁGINAS -->
+        <div class="page-content">
+
+
+            <!-- ================================== -->
+            <!-- VISÃO GERAL -->
+            <!-- ================================== -->
+
+            <section class="module-page active" id="page-inicio">
+
+                <div class="welcome-section">
+
+                    <div class="welcome-text">
+                        <div class="eyebrow">
+                            <span class="eyebrow-line"></span>
+                            SEU ESPAÇO DE EXPLORAÇÃO
+                        </div>
+
+                        <h2>
+                            A matemática<br>
+                            em <span>outra dimensão.</span>
+                        </h2>
+
+                        <p>
+                            Explore conceitos, construa gráficos,
+                            desenvolva cálculos e transforme ideias
+                            em descobertas matemáticas.
+                        </p>
+
+                        <button class="primary-button" data-go="graficos">
+                            <i data-lucide="chart-no-axes-combined"></i>
+                            Explorar ferramentas
+                            <i data-lucide="arrow-up-right"></i>
+                        </button>
+                    </div>
+
+                    <div class="welcome-visual">
+
+                        <div class="visual-glow"></div>
+
+                        <div class="visual-orbit orbit-one"></div>
+                        <div class="visual-orbit orbit-two"></div>
+
+                        <div class="visual-center">
+                            <i data-lucide="function"></i>
+                        </div>
+
+                        <div class="floating-symbol symbol-one">π</div>
+                        <div class="floating-symbol symbol-two">∑</div>
+                        <div class="floating-symbol symbol-three">√x</div>
+                        <div class="floating-symbol symbol-four">∞</div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ACESSO RÁPIDO -->
+
+                <div class="section-heading">
+
+                    <div>
+                        <span class="section-overline">FERRAMENTAS</span>
+                        <h3>Explore o laboratório</h3>
+                        <p>Escolha uma área para começar.</p>
+                    </div>
+
+                    <span class="section-counter">
+                        08 MÓDULOS
+                    </span>
+
+                </div>
+
+
+                <div class="tools-grid">
+
+                    <button class="tool-card tool-blue" data-go="graficos">
+
+                        <div class="tool-top">
+                            <div class="tool-icon">
+                                <i data-lucide="chart-no-axes-combined"></i>
+                            </div>
+                            <i data-lucide="arrow-up-right" class="tool-arrow"></i>
+                        </div>
+
+                        <div class="tool-content">
+                            <span>VISUALIZAÇÃO</span>
+                            <h4>Gráficos 2D</h4>
+                            <p>Construa e explore funções matemáticas.</p>
+                        </div>
+
+                    </button>
+
+
+                    <button class="tool-card tool-purple" data-go="geometria">
+
+                        <div class="tool-top">
+                            <div class="tool-icon">
+                                <i data-lucide="shapes"></i>
+                            </div>
+                            <i data-lucide="arrow-up-right" class="tool-arrow"></i>
+                        </div>
+
+                        <div class="tool-content">
+                            <span>CONSTRUÇÃO</span>
+                            <h4>Geometria 2D</h4>
+                            <p>Crie figuras, ângulos e construções.</p>
+                        </div>
+
+                    </button>
+
+
+                    <button class="tool-card tool-cyan" data-go="espacial">
+
+                        <div class="tool-top">
+                            <div class="tool-icon">
+                                <i data-lucide="box"></i>
+                            </div>
+                            <i data-lucide="arrow-up-right" class="tool-arrow"></i>
+                        </div>
+
+                        <div class="tool-content">
+                            <span>ESPAÇO</span>
+                            <h4>Geometria 3D</h4>
+                            <p>Explore superfícies e sólidos espaciais.</p>
+                        </div>
+
+                    </button>
+
+
+                    <button class="tool-card tool-green" data-go="calculadora">
+
+                        <div class="tool-top">
+                            <div class="tool-icon">
+                                <i data-lucide="calculator"></i>
+                            </div>
+                            <i data-lucide="arrow-up-right" class="tool-arrow"></i>
+                        </div>
+
+                        <div class="tool-content">
+                            <span>OPERAÇÕES</span>
+                            <h4>Calculadora científica</h4>
+                            <p>Realize operações e cálculos avançados.</p>
+                        </div>
+
+                    </button>
+
+
+                    <button class="tool-card tool-orange" data-go="algebra">
+
+                        <div class="tool-top">
+                            <div class="tool-icon">
+                                <i data-lucide="sigma"></i>
+                            </div>
+                            <i data-lucide="arrow-up-right" class="tool-arrow"></i>
+                        </div>
+
+                        <div class="tool-content">
+                            <span>EXPRESSÕES</span>
+                            <h4>Álgebra</h4>
+                            <p>Trabalhe com equações e polinômios.</p>
+                        </div>
+
+                    </button>
+
+
+                    <button class="tool-card tool-pink" data-go="calculo">
+
+                        <div class="tool-top">
+                            <div class="tool-icon">
+                                <i data-lucide="infinity"></i>
+                            </div>
+                            <i data-lucide="arrow-up-right" class="tool-arrow"></i>
+                        </div>
+
+                        <div class="tool-content">
+                            <span>ANÁLISE</span>
+                            <h4>Cálculo</h4>
+                            <p>Explore limites, derivadas e integrais.</p>
+                        </div>
+
+                    </button>
+
+
+                    <button class="tool-card tool-indigo" data-go="estatistica">
+
+                        <div class="tool-top">
+                            <div class="tool-icon">
+                                <i data-lucide="chart-pie"></i>
+                            </div>
+                            <i data-lucide="arrow-up-right" class="tool-arrow"></i>
+                        </div>
+
+                        <div class="tool-content">
+                            <span>DADOS</span>
+                            <h4>Estatística</h4>
+                            <p>Analise dados e distribuições.</p>
+                        </div>
+
+                    </button>
+
+
+                    <button class="tool-card tool-red" data-go="fisica">
+
+                        <div class="tool-top">
+                            <div class="tool-icon">
+                                <i data-lucide="orbit"></i>
+                            </div>
+                            <i data-lucide="arrow-up-right" class="tool-arrow"></i>
+                        </div>
+
+                        <div class="tool-content">
+                            <span>SIMULAÇÕES</span>
+                            <h4>Física matemática</h4>
+                            <p>Explore movimentos e fenômenos físicos.</p>
+                        </div>
+
+                    </button>
+
+                </div>
+
+
+                <!-- ÁREA INFERIOR -->
+
+                <div class="bottom-grid">
+
+                    <div class="panel recent-panel">
+
+                        <div class="panel-heading">
+                            <div>
+                                <span class="section-overline">ORGANIZAÇÃO</span>
+                                <h3>Área de trabalho</h3>
+                            </div>
+
+                            <i data-lucide="layers"></i>
+                        </div>
+
+                        <div class="empty-state">
+                            <div class="empty-icon">
+                                <i data-lucide="folder-plus"></i>
+                            </div>
+
+                            <h4>Seu espaço está pronto</h4>
+
+                            <p>
+                                Comece uma construção matemática
+                                ou crie seu primeiro projeto.
+                            </p>
+
+                            <button class="secondary-button" data-go="projetos">
+                                Abrir meus projetos
+                                <i data-lucide="arrow-right"></i>
+                            </button>
+                        </div>
+
+                    </div>
+
+
+                    <div class="panel equation-panel">
+
+                        <div class="panel-heading">
+                            <div>
+                                <span class="section-overline">MATEMÁTICA</span>
+                                <h3>Universo matemático</h3>
+                            </div>
+
+                            <i data-lucide="function"></i>
+                        </div>
+
+                        <div class="equation-display">
+                            <span class="equation-main">f(x) = ax² + bx + c</span>
+                            <span class="equation-description">
+                                Função polinomial do segundo grau
+                            </span>
+                        </div>
+
+                        <div class="equation-footer">
+                            <span>Explore as possibilidades.</span>
+                            <i data-lucide="sparkles"></i>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================================== -->
+            <!-- GRÁFICOS 2D -->
+            <!-- ================================== -->
+
+            <section class="module-page" id="page-graficos">
+
+                <div class="module-header">
+                    <div>
+                        <span class="section-overline">VISUALIZAÇÃO MATEMÁTICA</span>
+                        <h2>Gráficos <span>2D</span></h2>
+                        <p>Construa funções e visualize seu comportamento.</p>
+                    </div>
+
+                    <button class="secondary-button" id="clearGraph">
+                        <i data-lucide="refresh-ccw"></i>
+                        Limpar gráfico
+                    </button>
+                </div>
+
+                <div class="workspace-grid">
+
+                    <div class="panel control-panel">
+
+                        <div class="panel-heading">
+                            <h3>Expressões</h3>
+                            <i data-lucide="function"></i>
+                        </div>
+
+                        <div id="functionList"></div>
+
+                        <button class="add-function-button" id="addFunction">
+                            <i data-lucide="plus"></i>
+                            Adicionar função
+                        </button>
+
+                        <div class="panel-divider"></div>
+
+                        <div class="control-title">CONFIGURAÇÕES</div>
+
+                        <label class="field-label" for="graphMin">
+                            Eixo X: valor mínimo
+                        </label>
+
+                        <input class="math-input" type="number" id="graphMin" value="-10">
+
+                        <label class="field-label" for="graphMax">
+                            Eixo X: valor máximo
+                        </label>
+
+                        <input class="math-input" type="number" id="graphMax" value="10">
+
+                        <button class="primary-button full-button" id="plotGraph">
+                            <i data-lucide="play"></i>
+                            Construir gráfico
+                        </button>
+
+                    </div>
+
+
+                    <div class="panel graph-panel">
+
+                        <div class="graph-toolbar">
+                            <div>
+                                <span class="section-overline">PLANO CARTESIANO</span>
+                                <h3>Área de visualização</h3>
+                            </div>
+
+                            <button class="icon-button" id="graphFullscreen">
+                                <i data-lucide="maximize"></i>
+                            </button>
+                        </div>
+
+                        <div id="mainGraph" class="graph-area">
+                            <div class="graph-placeholder">
+                                <i data-lucide="chart-no-axes-combined"></i>
+                                <p>Seu gráfico aparecerá aqui.</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================================== -->
+            <!-- GEOMETRIA 2D -->
+            <!-- ================================== -->
+
+            <section class="module-page" id="page-geometria">
+
+                <div class="module-header">
+                    <div>
+                        <span class="section-overline">CONSTRUÇÃO GEOMÉTRICA</span>
+                        <h2>Geometria <span>2D</span></h2>
+                        <p>Construa figuras e explore suas propriedades.</p>
+                    </div>
+                </div>
+
+                <div class="panel geometry-panel">
+
+                    <div class="geometry-toolbar">
+
+                        <button class="geometry-tool active" data-tool="select" title="Selecionar">
+                            <i data-lucide="mouse-pointer-2"></i>
+                        </button>
+
+                        <button class="geometry-tool" data-tool="point" title="Ponto">
+                            <i data-lucide="circle-dot"></i>
+                        </button>
+
+                        <button class="geometry-tool" data-tool="line" title="Reta">
+                            <i data-lucide="minus"></i>
+                        </button>
+
+                        <button class="geometry-tool" data-tool="segment" title="Segmento">
+                            <i data-lucide="ruler"></i>
+                        </button>
+
+                        <button class="geometry-tool" data-tool="circle" title="Circunferência">
+                            <i data-lucide="circle"></i>
+                        </button>
+
+                        <button class="geometry-tool" data-tool="triangle" title="Triângulo">
+                            <i data-lucide="triangle"></i>
+                        </button>
+
+                        <button class="geometry-tool" data-tool="polygon" title="Polígono">
+                            <i data-lucide="pentagon"></i>
+                        </button>
+
+                        <div class="toolbar-separator"></div>
+
+                        <button class="geometry-tool" id="undoGeometry" title="Desfazer">
+                            <i data-lucide="undo-2"></i>
+                        </button>
+
+                        <button class="geometry-tool" id="clearGeometry" title="Limpar">
+                            <i data-lucide="trash-2"></i>
+                        </button>
+
+                    </div>
+
+                    <canvas id="geometryCanvas"></canvas>
+
+                    <div class="geometry-footer">
+                        <span>PLANO CARTESIANO</span>
+                        <span id="geometryStatus">Ferramenta: Selecionar</span>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================================== -->
+            <!-- GEOMETRIA 3D -->
+            <!-- ================================== -->
+
+            <section class="module-page" id="page-espacial">
+
+                <div class="module-header">
+                    <div>
+                        <span class="section-overline">VISUALIZAÇÃO ESPACIAL</span>
+                        <h2>Geometria <span>3D</span></h2>
+                        <p>Explore formas, sólidos e superfícies tridimensionais.</p>
+                    </div>
+                </div>
+
+                <div class="panel three-panel">
+
+                    <div class="three-toolbar">
+                        <span>LABORATÓRIO TRIDIMENSIONAL</span>
+                        <button class="secondary-button" id="reset3D">
+                            <i data-lucide="refresh-ccw"></i>
+                            Reiniciar
+                        </button>
+                    </div>
+
+                    <div id="threeCanvas" class="three-canvas"></div>
+
+                    <div class="three-controls">
+
+                        <button class="solid-button" data-solid="cube">
+                            <i data-lucide="box"></i>
+                            Cubo
+                        </button>
+
+                        <button class="solid-button" data-solid="sphere">
+                            <i data-lucide="circle"></i>
+                            Esfera
+                        </button>
+
+                        <button class="solid-button" data-solid="cone">
+                            <i data-lucide="cone"></i>
+                            Cone
+                        </button>
+
+                        <button class="solid-button" data-solid="cylinder">
+                            <i data-lucide="cylinder"></i>
+                            Cilindro
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================================== -->
+            <!-- CALCULADORA -->
+            <!-- ================================== -->
+
+            <section class="module-page" id="page-calculadora">
+
+                <div class="module-header">
+                    <div>
+                        <span class="section-overline">OPERAÇÕES MATEMÁTICAS</span>
+                        <h2>Calculadora <span>científica</span></h2>
+                        <p>Precisão e praticidade para seus cálculos.</p>
+                    </div>
+                </div>
+
+                <div class="calculator-layout">
+
+                    <div class="panel calculator-panel">
+
+                        <div class="calculator-display">
+                            <div id="calculatorExpression">0</div>
+                            <div id="calculatorResult">0</div>
+                        </div>
+
+                        <div class="calculator-buttons">
+
+                            <button class="calc-button function-key" data-calc="clear">AC</button>
+                            <button class="calc-button function-key" data-calc="delete">DEL</button>
+                            <button class="calc-button function-key" data-calc="(">(</button>
+                            <button class="calc-button function-key" data-calc=")">)</button>
+                            <button class="calc-button operator-key" data-calc="/">÷</button>
+
+                            <button class="calc-button" data-calc="7">7</button>
+                            <button class="calc-button" data-calc="8">8</button>
+                            <button class="calc-button" data-calc="9">9</button>
+                            <button class="calc-button function-key" data-calc="sqrt(">√</button>
+                            <button class="calc-button operator-key" data-calc="*">×</button>
+
+                            <button class="calc-button" data-calc="4">4</button>
+                            <button class="calc-button" data-calc="5">5</button>
+                            <button class="calc-button" data-calc="6">6</button>
+                            <button class="calc-button function-key" data-calc="^">xʸ</button>
+                            <button class="calc-button operator-key" data-calc="-">−</button>
+
+                            <button class="calc-button" data-calc="1">1</button>
+                            <button class="calc-button" data-calc="2">2</button>
+                            <button class="calc-button" data-calc="3">3</button>
+                            <button class="calc-button function-key" data-calc="pi">π</button>
+                            <button class="calc-button operator-key" data-calc="+">+</button>
+
+                            <button class="calc-button function-key" data-calc="sin(">sen</button>
+                            <button class="calc-button function-key" data-calc="cos(">cos</button>
+                            <button class="calc-button function-key" data-calc="tan(">tg</button>
+                            <button class="calc-button" data-calc="0">0</button>
+                            <button class="calc-button" data-calc=".">.</button>
+
+                            <button class="calc-button function-key" data-calc="log(">log</button>
+                            <button class="calc-button function-key" data-calc="ln(">ln</button>
+                            <button class="calc-button function-key" data-calc="e">e</button>
+                            <button class="calc-button function-key" data-calc="factorial">n!</button>
+                            <button class="calc-button equals-key" data-calc="equals">=</button>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="panel calculation-history">
+
+                        <div class="panel-heading">
+                            <h3>Histórico</h3>
+                            <i data-lucide="history"></i>
+                        </div>
+
+                        <div id="calculatorHistory" class="history-content">
+                            <div class="empty-state">
+                                <i data-lucide="clipboard-list"></i>
+                                <p>Seus cálculos aparecerão aqui.</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================================== -->
+            <!-- ÁLGEBRA -->
+            <!-- ================================== -->
+
+            <section class="module-page" id="page-algebra">
+
+                <div class="module-header">
+                    <div>
+                        <span class="section-overline">EXPRESSÕES E EQUAÇÕES</span>
+                        <h2>Álgebra</h2>
+                        <p>Trabalhe com expressões, equações e sistemas.</p>
+                    </div>
+                </div>
+
+                <div class="panel module-workspace">
+
+                    <div class="panel-heading">
+                        <h3>Resolução de equações</h3>
+                        <i data-lucide="sigma"></i>
+                    </div>
+
+                    <label class="field-label" for="algebraInput">
+                        Digite uma equação ou expressão
+                    </label>
+
+                    <input class="math-input large-input" id="algebraInput" placeholder="Ex.: x^2 - 5*x + 6 = 0">
+
+                    <button class="primary-button" id="solveAlgebra">
+                        <i data-lucide="calculator"></i>
+                        Calcular
+                    </button>
+
+                    <div class="result-area" id="algebraResult">
+                        <span>RESULTADO</span>
+                        <p>A resposta aparecerá aqui.</p>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================================== -->
+            <!-- CÁLCULO -->
+            <!-- ================================== -->
+
+            <section class="module-page" id="page-calculo">
+
+                <div class="module-header">
+                    <div>
+                        <span class="section-overline">MATEMÁTICA AVANÇADA</span>
+                        <h2>Cálculo</h2>
+                        <p>Explore os conceitos fundamentais do cálculo diferencial e integral.</p>
+                    </div>
+                </div>
+
+                <div class="tools-grid calculation-tools">
+
+                    <button class="tool-card tool-blue" data-calculation="derivada">
+                        <div class="tool-icon"><i data-lucide="trending-up"></i></div>
+                        <div class="tool-content">
+                            <span>ANÁLISE</span>
+                            <h4>Derivadas</h4>
+                            <p>Taxas de variação e inclinações.</p>
+                        </div>
+                    </button>
+
+                    <button class="tool-card tool-purple" data-calculation="integral">
+                        <div class="tool-icon"><i data-lucide="area-chart"></i></div>
+                        <div class="tool-content">
+                            <span>INTEGRAÇÃO</span>
+                            <h4>Integrais</h4>
+                            <p>Áreas e acumulações.</p>
+                        </div>
+                    </button>
+
+                    <button class="tool-card tool-cyan" data-calculation="limite">
+                        <div class="tool-icon"><i data-lucide="arrow-right-left"></i></div>
+                        <div class="tool-content">
+                            <span>APROXIMAÇÃO</span>
+                            <h4>Limites</h4>
+                            <p>Comportamento de funções.</p>
+                        </div>
+                    </button>
+
+                </div>
+
+                <div class="panel module-workspace">
+
+                    <label class="field-label" for="calculusFunction">
+                        Função matemática
+                    </label>
+
+                    <input class="math-input large-input" id="calculusFunction" placeholder="Ex.: x^2 + 3*x">
+
+                    <label class="field-label" for="calculusVariable">
+                        Variável
+                    </label>
+
+                    <input class="math-input" id="calculusVariable" value="x">
+
+                    <div class="calculus-actions">
+                        <button class="secondary-button" data-operation="derivative">Derivar</button>
+                        <button class="secondary-button" data-operation="integral">Integrar</button>
+                    </div>
+
+                    <div class="result-area" id="calculusResult">
+                        <span>RESULTADO</span>
+                        <p>Selecione uma operação.</p>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================================== -->
+            <!-- ESTATÍSTICA -->
+            <!-- ================================== -->
+
+            <section class="module-page" id="page-estatistica">
+
+                <div class="module-header">
+                    <div>
+                        <span class="section-overline">ANÁLISE DE DADOS</span>
+                        <h2>Estatística</h2>
+                        <p>Organize dados, calcule medidas e visualize informações.</p>
+                    </div>
+                </div>
+
+                <div class="panel module-workspace">
+
+                    <div class="panel-heading">
+                        <h3>Calculadora estatística</h3>
+                        <i data-lucide="chart-column-increasing"></i>
+                    </div>
+
+                    <label class="field-label" for="statisticsInput">
+                        Insira os valores separados por vírgula
+                    </label>
+
+                    <textarea class="math-input statistics-textarea" id="statisticsInput" placeholder="Ex.: 10, 15, 20, 25, 30"></textarea>
+
+                    <button class="primary-button" id="calculateStatistics">
+                        <i data-lucide="calculator"></i>
+                        Analisar dados
+                    </button>
+
+                    <div class="statistics-results" id="statisticsResults">
+
+                        <div class="stat-result">
+                            <span>MÉDIA</span>
+                            <strong id="statMean">—</strong>
+                        </div>
+
+                        <div class="stat-result">
+                            <span>MEDIANA</span>
+                            <strong id="statMedian">—</strong>
+                        </div>
+
+                        <div class="stat-result">
+                            <span>MODA</span>
+                            <strong id="statMode">—</strong>
+                        </div>
+
+                        <div class="stat-result">
+                            <span>DESVIO PADRÃO</span>
+                            <strong id="statDeviation">—</strong>
+                        </div>
+
+                    </div>
+
+                    <div id="statisticsChart" class="statistics-chart"></div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================================== -->
+            <!-- FÍSICA MATEMÁTICA -->
+            <!-- ================================== -->
+
+            <section class="module-page" id="page-fisica">
+
+                <div class="module-header">
+                    <div>
+                        <span class="section-overline">CIÊNCIA E MOVIMENTO</span>
+                        <h2>Física <span>matemática</span></h2>
+                        <p>Explore fenômenos físicos por meio de modelos matemáticos.</p>
+                    </div>
+                </div>
+
+                <div class="tools-grid">
+
+                    <button class="tool-card tool-blue" data-physics="uniform">
+                        <div class="tool-icon"><i data-lucide="move-horizontal"></i></div>
+                        <div class="tool-content">
+                            <span>CINEMÁTICA</span>
+                            <h4>Movimento uniforme</h4>
+                            <p>Posição, velocidade e tempo.</p>
+                        </div>
+                    </button>
+
+                    <button class="tool-card tool-purple" data-physics="accelerated">
+                        <div class="tool-icon"><i data-lucide="gauge"></i></div>
+                        <div class="tool-content">
+                            <span>CINEMÁTICA</span>
+                            <h4>Movimento acelerado</h4>
+                            <p>Explore a aceleração.</p>
+                        </div>
+                    </button>
+
+                    <button class="tool-card tool-cyan" data-physics="projectile">
+                        <div class="tool-icon"><i data-lucide="activity"></i></div>
+                        <div class="tool-content">
+                            <span>LANÇAMENTOS</span>
+                            <h4>Lançamento oblíquo</h4>
+                            <p>Trajetórias e movimentos.</p>
+                        </div>
+                    </button>
+
+                </div>
+
+                <div class="panel module-workspace">
+                    <div class="panel-heading">
+                        <h3>Laboratório de movimento</h3>
+                        <i data-lucide="atom"></i>
+                    </div>
+
+                    <div id="physicsWorkspace">
+                        <p>Selecione uma simulação acima para começar.</p>
+                    </div>
+                </div>
+
+            </section>
+
+
+            <!-- ================================== -->
+            <!-- EDITOR MATEMÁTICO -->
+            <!-- ================================== -->
+
+            <section class="module-page" id="page-editor">
+
+                <div class="module-header">
+                    <div>
+                        <span class="section-overline">ESCRITA E DOCUMENTAÇÃO</span>
+                        <h2>Editor <span>matemático</span></h2>
+                        <p>Organize fórmulas, anotações e materiais de aula.</p>
+                    </div>
+                </div>
+
+                <div class="panel module-workspace">
+
+                    <div class="panel-heading">
+                        <h3>Novo documento</h3>
+                        <i data-lucide="file-pen-line"></i>
+                    </div>
+
+                    <input class="math-input large-input" id="documentTitle" placeholder="Título do documento">
+
+                    <textarea class="math-input editor-textarea" id="documentContent" placeholder="Escreva suas anotações matemáticas aqui..."></textarea>
+
+                    <div class="editor-actions">
+
+                        <button class="secondary-button" id="clearDocument">
+                            Limpar
+                        </button>
+
+                        <button class="primary-button" id="exportDocument">
+                            <i data-lucide="download"></i>
+                            Exportar documento
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================================== -->
+            <!-- BIBLIOTECA -->
+            <!-- ================================== -->
+
+            <section class="module-page" id="page-biblioteca">
+
+                <div class="module-header">
+                    <div>
+                        <span class="section-overline">SEU ACERVO</span>
+                        <h2>Biblioteca</h2>
+                        <p>Consulte seus materiais e recursos matemáticos.</p>
+                    </div>
+                </div>
+
+                <div class="panel module-workspace">
+                    <div class="empty-state">
+                        <div class="empty-icon">
+                            <i data-lucide="library"></i>
+                        </div>
+
+                        <h4>Sua biblioteca matemática</h4>
+
+                        <p>
+                            Um espaço para organizar e acessar
+                            seus materiais e construções.
+                        </p>
+                    </div>
+                </div>
+
+            </section>
+
+
+            <!-- ================================== -->
+            <!-- PROJETOS -->
+            <!-- ================================== -->
+
+            <section class="module-page" id="page-projetos">
+
+                <div class="module-header">
+                    <div>
+                        <span class="section-overline">ESPAÇO DE TRABALHO</span>
+                        <h2>Meus projetos</h2>
+                        <p>Organize suas experiências e construções matemáticas.</p>
+                    </div>
+                </div>
+
+                <div class="panel module-workspace">
+
+                    <div class="empty-state">
+                        <div class="empty-icon">
+                            <i data-lucide="folder-open"></i>
+                        </div>
+
+                        <h4>Nenhum projeto por enquanto</h4>
+
+                        <p>
+                            Comece explorando uma das ferramentas
+                            do laboratório.
+                        </p>
+
+                        <button class="primary-button" data-go="graficos">
+                            Explorar ferramentas
+                        </button>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+        </div>
+
+
+        <!-- RODAPÉ -->
+        <footer class="main-footer">
+
+            <div class="footer-brand">
+                <span class="footer-dot"></span>
+                GUILHERME MATHLAB
+            </div>
+
+            <span>Um universo de possibilidades matemáticas.</span>
+
+            <span>© 2026</span>
+
+        </footer>
+
+    </main>
+
+</div>
+
+
+<!-- CAMADA DE NOTIFICAÇÕES -->
+<div id="toastContainer" class="toast-container"></div>
+
+
+<!-- JAVASCRIPT DO PROJETO -->
+<script src="script.js"></script>
+<footer style="text-align:center; padding:20px; color:#8b91a5; font-size:13px;">
+  By Lamis Saad
+</footer>
+</body>
+</html>
